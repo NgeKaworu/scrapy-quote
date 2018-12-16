@@ -14,8 +14,8 @@ class QuotesSpider(scrapy.Spider):
             item['author'] = author.extract()
             yield item
 
-        # for author in response.css('.next').xpath('a/@href'):
-        #     yield response.follow(author, callback=self.parse)
+        for author in response.css('.next').xpath('a/@href'):
+            yield response.follow(author, callback=self.parse)
 
         for about in response.css('.author').xpath('../a/@href'):
             yield response.follow(about, callback=self.parseAbout)

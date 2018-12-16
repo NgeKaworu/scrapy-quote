@@ -31,8 +31,11 @@ class MongoDBPipeline(object):
     
     def process_item(self, item, spider):
         if spider.name == 'quotes':
-            self.list.append(item['author'])
-            self.db['about'].insert(item['about'])
+            if 'author' in item:
+                self.list.append(item['author'])
+
+            if 'about' in item:
+                self.db['about'].insert(item['about'])
         return item
 
     def close_spider(self, spider):
