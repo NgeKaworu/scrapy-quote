@@ -32,10 +32,12 @@ class MongoDBPipeline(object):
     def process_item(self, item, spider):
         if spider.name == 'quotes':
             self.list.append(item['author'])
+            self.db['about'].insert(item['about'])
         return item
 
     def close_spider(self, spider):
         if spider.name == 'quotes':
             self.count = Counter(self.list).most_common()
             self.db['author'].insert_many([{'author': i[0], 'count': i[1], 'query_date': time.time()} for i in self.count])
+            
         self.client.close()
