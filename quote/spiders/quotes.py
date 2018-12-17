@@ -26,5 +26,5 @@ class QuotesSpider(scrapy.Spider):
         title = detail.css('.author-title::text').extract_first().strip()
         description = detail.css(
             '.author-description::text').extract_first().strip()
-        item['about'] = { 'title': title, 'description': description }
+        item['about'] = { 'author': title, 'description': description }
         yield item
